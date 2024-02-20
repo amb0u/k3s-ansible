@@ -1,7 +1,7 @@
 ---
 k3s_version: v1.29.0+k3s1
 # this is the user that has ssh access to these machines
-ansible_user: ansibleuser
+ansible_user: kubeadmin
 systemd_dir: /etc/systemd/system
 
 # Set your timezone
@@ -35,11 +35,11 @@ cilium_bgp_peer_address: "192.168.30.1"
 cilium_bgp_lb_cidr: "192.168.31.0/24"   # cidr for cilium loadbalancer ipam
 
 # apiserver_endpoint is virtual ip-address which will be configured on each master
-apiserver_endpoint: "192.168.30.222"
+apiserver_endpoint: "172.233.253.51"
 
 # k3s_token is required  masters can talk together securely
 # this token should be alpha numeric only
-k3s_token: "some-SUPER-DEDEUPER-secret-password"
+k3s_token: "K1065e206df7bf57775ad56dc111fa9d713ebf8c72dff85bc116264069fc3624238::server:fcb26242b3c418bcdd371f0770d75d7b"
 
 # The IP on which the node is reachable in the cluster.
 # Here, a sensible default is provided, you can still override
@@ -97,7 +97,7 @@ metal_lb_speaker_tag_version: "v0.13.12"
 metal_lb_controller_tag_version: "v0.13.12"
 
 # metallb ip range for load balancer
-metal_lb_ip_range: "192.168.30.80-192.168.30.90" # can use: 192.168.30.90-192.168.30.90
+metal_lb_ip_range: "172.232.53.188-172.232.53.188"
 
 
 # Only enable this if you have set up your own container registry to act as a mirror / pull-through cache
