@@ -3,3 +3,5 @@
 ansible.cfg
 kubeconfig
 *.key
+example/traefik/cloudflare-credentials.yml
+./inventory/sample/hosts.ini

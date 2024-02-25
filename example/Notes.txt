@@ -1,0 +1,25 @@
+Mise en place du cluster
+ansible-playbook site.yml -i inventory/sample/hosts.ini --key-file linode.key
+ansible-playbook reset.yml -i inventory/sample/hosts.ini --key-file linode.key
+
+Déploiement de Traefik 
+Déploiement de deployment, service & ingress
+https://www.youtube.com/watch?v=n5dpQLqOfqM&ab_channel=ChristianLempa
+
+
+1. credentials liés à cloudflare
+kubectl apply -f cloudflare-credentials.yml
+
+2. install traefik
+helm install traefik traefik/traefik --values=traefik-values.yml
+
+3. upgrade release
+helm upgrade traefik traefik/traefik --values=traefik-values.yml
+
+4. deploy nginx application
+kubectl apply -f deployment-nginx.yml
+
+
+Troubleshooting:
+
+ERR_TOO_MANY_REDIRECTS: https://www.youtube.com/watch?v=_2Gj6p3uPSc&ab_channel=MAHDI
