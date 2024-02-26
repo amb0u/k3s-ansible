@@ -1,0 +1,21 @@
+A. Install argocd
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+B. Edit argocd svc and change ClusterIp to NodePort
+kubectl edit svc argocd-server -n argocd
+
+C. Deploy a service for argocd
+kubectl apply -f argocd-ingress.yml
+
+D. To avoid too many requests, run this to add --insecure arguments
+containers:
+      - args:
+        - /usr/local/bin/argocd-server
+        - --insecure
+
+E. Get initial admin password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"| base64 -d;echo
+
+
+ToDo: Do installation with Helm chart
