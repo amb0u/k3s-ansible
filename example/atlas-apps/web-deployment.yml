@@ -1,9 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: dev-web
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,7 +21,20 @@ spec:
         - containerPort: 80
         env:
         - name: REACT_APP_API_URL
-          value: "https://new-api.atlascmms.com"        
+          valueFrom:
+            secretKeyRef:
+              key: REACT_APP_API_URL
+              name: web-credentials
+        - name: REACT_APP_GOOGLE_KEY
+          valueFrom:
+            secretKeyRef:
+              key: REACT_APP_GOOGLE_KEY
+              name: web-credentials
+        - name: REACT_APP_GOOGLE_TRACKING_ID
+          valueFrom:
+            secretKeyRef:
+              key: REACT_APP_GOOGLE_TRACKING_ID
+              name: web-credentials
         resources:
           limits:
             cpu: "1"

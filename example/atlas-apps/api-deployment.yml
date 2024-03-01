@@ -5,7 +5,7 @@ metadata:
   name: altas-api
   namespace: dev
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: atlas
@@ -92,11 +92,11 @@ spec:
               name: api-credentials   
         resources:
           limits:
-            cpu: "2"
-            memory: "2Gi"
-          requests:
             cpu: "1"
-            memory: "1Gi" 
+            memory: "1Gi"
+          requests:
+            cpu: "0.5"
+            memory: "1Gi"
 ---
 apiVersion: v1
 kind: Service
