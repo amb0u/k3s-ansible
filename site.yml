@@ -38,6 +38,7 @@
 - name: Storing kubeconfig in the playbook directory
   hosts: master
   environment: "{{ proxy_env | default({}) }}"
+  become: true
   tasks:
     - name: Copying kubeconfig from {{ hostvars[groups[group_name_master | default('master')][0]]['ansible_hostname'] }}
       ansible.builtin.fetch:
