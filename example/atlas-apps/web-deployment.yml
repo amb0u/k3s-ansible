@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: altas-web
-        image: amb0u/react-app:latest
+        image: amb0u/react-app:54
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         env:
         - name: REACT_APP_API_URL
           valueFrom:
@@ -37,11 +37,11 @@ spec:
               name: web-credentials
         resources:
           limits:
-            cpu: "1"
-            memory: "1Gi"
+            cpu: "3"
+            memory: "4Gi"
           requests:
-            cpu: "1"
-            memory: "1Gi"    
+            cpu: "3"
+            memory: "4Gi"    
 ---
 apiVersion: v1
 kind: Service
@@ -54,7 +54,7 @@ spec:
   type:  ClusterIP
   ports:
   - name:  http
-    port:  80
+    port:  3000
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -73,4 +73,4 @@ spec:
           service:
             name: altas-web
             port:
-              number: 80
+              number: 3000

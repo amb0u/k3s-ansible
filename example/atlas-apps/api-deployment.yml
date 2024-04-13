@@ -2,23 +2,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: altas-api
-  namespace: dev
+  name: dev-api
+  namespace: dev-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: atlas
+      app: dev-api
   template:
     metadata:
       labels:
-        app: atlas
+        app: dev-api
     spec:
       containers:
-      - name: altas-api
-        image: amb0u/atlas-api:latest
+      - name: dev-api
+        image: amb0u/atlas-api:79
         ports:
         - containerPort: 8080
+        
+        readinessProbe:
+          httpGet:
+            path: /health-check
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 80
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /health-check
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 80
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+
         env:
         - name: API_HOST
           valueFrom:
@@ -92,20 +114,25 @@ spec:
               name: api-credentials   
         resources:
           limits:
-            cpu: "1"
-            memory: "1Gi"
+            cpu: "4"
+            memory: "4Gi"
           requests:
-            cpu: "0.5"
-            memory: "1Gi"
+            cpu: "4"
+            memory: "4Gi"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1 # or any desired value
+      maxSurge: 0
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name:  altas-api
-  namespace: dev
+  name:  dev-api
+  namespace: dev-api
 spec:
   selector:
-    app: atlas
+    app: dev-api
   type:  ClusterIP
   ports:
   - name:  http
@@ -114,17 +141,17 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: altas-api
-  namespace: dev
+  name: dev-api
+  namespace: dev-api
 spec:
   rules:
-  - host: "new-api.atlascmms.com"
+  - host: "dev-api.atlascmms.com"
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: altas-api
+            name: dev-api
             port:
               number: 8080

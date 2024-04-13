@@ -11,15 +11,25 @@ https://www.youtube.com/watch?v=n5dpQLqOfqM&ab_channel=ChristianLempa
 kubectl apply -f cloudflare-credentials.yml
 
 2. install traefik
-helm install traefik traefik/traefik --values=traefik-values.yml
+helm install traefik traefik/traefik --values=traefik-values.yml -n traefik
 
 3. upgrade release
-helm upgrade traefik traefik/traefik --values=traefik-values.yml
+helm upgrade traefik traefik/traefik --values=traefik-values.yml -n traefik
 
 4. deploy nginx application
 kubectl apply -f deployment-nginx.yml
 
 
 Troubleshooting:
+helm list -A
+helm delete traefik -n kube-system
+helm delete traefik -n kube-system
 
 ERR_TOO_MANY_REDIRECTS: https://www.youtube.com/watch?v=_2Gj6p3uPSc&ab_channel=MAHDI
+
+Resolve Ownership Metadata:
+kubectl annotate ingressclass traefik meta.helm.sh/release-namespace=traefik --overwrite
+
+When unstalling:
+kubectl get pvc -A -w -o wide
+delete pvc traefik -n traefik

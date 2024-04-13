@@ -4,6 +4,6 @@ ansible.cfg
 kubeconfig
 *.key
 example/traefik/cloudflare-credentials.yml
-example/atlas-apps/api-credentials.yml
-example/atlas-apps/web-credentials.yml
+example/atlas-apps/dev/*-credentials.yml
+example/atlas-apps/prod/*-credentials.yml
 ./inventory/sample/hosts.ini
